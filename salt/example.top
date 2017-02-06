@@ -1,4 +1,5 @@
 base:
     '*':
         - elife
+        - elife.nginx
         - reviewer-suggestions
