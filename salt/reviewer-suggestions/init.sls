@@ -19,3 +19,18 @@ reviewer-suggestions-nginx-authentication-{{ title }}:
         - listen_in:
             - service: nginx-server-service
 {% endfor %}
+
+reviewer-suggestions-server-service:
+    file.managed:
+        - name: /etc/nginx/sites-enabled/reviewer-suggestions-server.conf
+        - source: salt://reviewer-suggestions/config/etc-init-reviewer-suggestions-server.conf
+        - template: jinja
+        # TODO:
+        # - require:
+        #    - reviewer-suggestions-repository
+
+    service.running:
+        - name: reviewer-suggestions-server
+        - require:
+            - file: reviewer-suggestions-server-service
+
