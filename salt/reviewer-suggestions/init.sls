@@ -22,7 +22,7 @@ reviewer-suggestions-nginx-authentication-{{ title }}:
 
 reviewer-suggestions-server-service:
     file.managed:
-        - name: /etc/nginx/sites-enabled/reviewer-suggestions-server.conf
+        - name: /etc/init/reviewer-suggestions-server.conf
         - source: salt://reviewer-suggestions/config/etc-init-reviewer-suggestions-server.conf
         - template: jinja
         # TODO:
