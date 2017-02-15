@@ -3,4 +3,5 @@ base:
         - elife
         - elife.nginx
         - elife.python3
+        - elife.aws-cli
         - reviewer-suggestions
