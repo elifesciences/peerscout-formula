@@ -4,4 +4,5 @@ base:
         - elife.nginx
         - elife.python3
         - elife.aws-cli
+        - elife.external-volume
         - reviewer-suggestions
