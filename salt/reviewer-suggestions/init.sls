@@ -20,18 +20,34 @@ reviewer-suggestions-nginx-authentication-{{ title }}:
             - service: nginx-server-service
 {% endfor %}
 
+reviewer-suggestions-build-essential:
+    pkg.installed:
+        - pkgs:
+            - build-essential
+
 reviewer-suggestions-server-service:
     file.managed:
         - name: /etc/init/reviewer-suggestions-server.conf
         - source: salt://reviewer-suggestions/config/etc-init-reviewer-suggestions-server.conf
         - template: jinja
         - require:
-            - reviewer-suggestions-repository
+            - reviewer-suggestions-configure
 
     service.running:
         - name: reviewer-suggestions-server
         - require:
             - file: reviewer-suggestions-server-service
+
+reviewer-suggestions-configure:
+    cmd.run:
+        - user: {{ pillar.elife.deploy_user.username }}
+        - cwd: /home/elife/prototype/project/
+        - name: |
+            ./install.sh 
+        - require:
+            - reviewer-suggestions-build-essential
+            - python-dev
+            - reviewer-suggestions-repository
 
 reviewer-suggestions-repository:
     builder.git_latest:
