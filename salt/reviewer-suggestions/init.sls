@@ -25,14 +25,24 @@ reviewer-suggestions-server-service:
         - name: /etc/init/reviewer-suggestions-server.conf
         - source: salt://reviewer-suggestions/config/etc-init-reviewer-suggestions-server.conf
         - template: jinja
-        # TODO:
-        # - require:
-        #    - reviewer-suggestions-repository
+        - require:
+            - reviewer-suggestions-repository
 
     service.running:
         - name: reviewer-suggestions-server
         - require:
             - file: reviewer-suggestions-server-service
+
+reviewer-suggestions-repository:
+    builder.git_latest:
+        - name: git@github.com:elifesciences/reviewer-suggestions.git
+        - identity: {{ pillar.elife.projects_builder.key or '' }}
+        - rev: {{ salt['elife.rev']() }}
+        - branch: {{ salt['elife.branch']() }}
+        - target: /home/elife/prototype/project/
+        - force_fetch: True
+        - force_checkout: True
+        - force_reset: True
 
 reviewer-suggestions-aws-credentials:
     file.managed:
