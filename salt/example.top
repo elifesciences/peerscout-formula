@@ -2,6 +2,7 @@ base:
     '*':
         - elife
         - elife.nginx
+        - elife.nodejs6
         - elife.python3
         - elife.aws-cli
         - elife.external-volume

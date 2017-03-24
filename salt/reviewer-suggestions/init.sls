@@ -32,11 +32,35 @@ reviewer-suggestions-server-service:
         - template: jinja
         - require:
             - reviewer-suggestions-preprocess
+            - reviewer-suggestions-client-bundle
 
     service.running:
         - name: reviewer-suggestions-server
         - require:
             - file: reviewer-suggestions-server-service
+
+reviewer-suggestions-client-file-permissions:
+  file.directory:
+    - name: {{ pillar.reviewer_suggestions.installation_path }}/client
+    - mode: 777
+
+reviewer-suggestions-client-install:
+    cmd.run:
+        - user: {{ pillar.elife.deploy_user.username }}
+        - cwd: {{ pillar.reviewer_suggestions.installation_path }}/client
+        - name: |
+            npm install
+        - require:
+            - reviewer-suggestions-client-file-permissions
+
+reviewer-suggestions-client-bundle:
+    cmd.run:
+        - user: {{ pillar.elife.deploy_user.username }}
+        - cwd: {{ pillar.reviewer_suggestions.installation_path }}/client
+        - name: |
+            npm run bundle
+        - require:
+            - reviewer-suggestions-client-install
 
 reviewer-suggestions-configure:
     cmd.run:
