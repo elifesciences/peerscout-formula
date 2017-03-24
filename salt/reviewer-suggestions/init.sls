@@ -108,7 +108,6 @@ reviewer-suggestions-aws-credentials:
 reviewer-suggestions-cron:
     cron.present:
         - name: {{ pillar.reviewer_suggestions.installation_path }}/update-data-and-reload.sh
-        - identifier: daily-update
-        - hour: 5
+        - identifier: update-data
         - minute: 0
         - user: {{ pillar.elife.deploy_user.username }}
