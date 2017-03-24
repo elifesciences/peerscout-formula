@@ -6,4 +6,5 @@ base:
         - elife.python3
         - elife.aws-cli
         - elife.external-volume
+        - elife.external-volume-srv
         - reviewer-suggestions
