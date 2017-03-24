@@ -41,7 +41,7 @@ reviewer-suggestions-server-service:
 reviewer-suggestions-configure:
     cmd.run:
         - user: {{ pillar.elife.deploy_user.username }}
-        - cwd: /home/elife/prototype/project/
+        - cwd: {{ pillar.reviewer_suggestions.installation_path }}
         - name: |
             ./install.sh
         - require:
@@ -52,9 +52,9 @@ reviewer-suggestions-configure:
 reviewer-suggestions-preprocess:
     cmd.run:
         - user: {{ pillar.elife.deploy_user.username }}
-        - cwd: /home/elife/prototype/project/preprocessing
+        - cwd: {{ pillar.reviewer_suggestions.installation_path }}/preprocessing
         - name: |
-            /home/elife/prototype/project/venv/bin/python ./updateDataAndReload.py
+            {{ pillar.reviewer_suggestions.installation_path }}/venv/bin/python ./updateDataAndReload.py
         - require:
             - reviewer-suggestions-configure
 
@@ -64,7 +64,7 @@ reviewer-suggestions-repository:
         - identity: {{ pillar.elife.projects_builder.key or '' }}
         - rev: {{ salt['elife.rev']() }}
         - branch: {{ salt['elife.branch']() }}
-        - target: /home/elife/prototype/project/
+        - target: {{ pillar.reviewer_suggestions.installation_path }}
         - force_fetch: True
         - force_checkout: True
         - force_reset: True
