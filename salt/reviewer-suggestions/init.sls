@@ -33,6 +33,7 @@ reviewer-suggestions-server-service:
         - require:
             - reviewer-suggestions-preprocess
             - reviewer-suggestions-client-bundle
+            - reviewer-suggestions-cron
 
     service.running:
         - name: reviewer-suggestions-server
@@ -103,3 +104,11 @@ reviewer-suggestions-aws-credentials:
         - template: jinja
         - require:
             - deploy-user
+
+reviewer-suggestions-cron:
+    cron.present:
+        - name: {{ pillar.reviewer_suggestions.installation_path }}/update-data-and-reload.sh
+        - identifier: daily-update
+        - hour: 5
+        - minute: 0
+        - user: {{ pillar.elife.deploy_user.username }}
