@@ -31,7 +31,7 @@ reviewer-suggestions-server-service:
         - source: salt://reviewer-suggestions/config/etc-init-reviewer-suggestions-server.conf
         - template: jinja
         - require:
-            - reviewer-suggestions-configure
+            - reviewer-suggestions-preprocess
 
     service.running:
         - name: reviewer-suggestions-server
@@ -43,11 +43,20 @@ reviewer-suggestions-configure:
         - user: {{ pillar.elife.deploy_user.username }}
         - cwd: /home/elife/prototype/project/
         - name: |
-            ./install.sh 
+            ./install.sh
         - require:
             - reviewer-suggestions-build-essential
             - python-dev
             - reviewer-suggestions-repository
+
+reviewer-suggestions-preprocess:
+    cmd.run:
+        - user: {{ pillar.elife.deploy_user.username }}
+        - cwd: /home/elife/prototype/project/preprocessing
+        - name: |
+            /home/elife/prototype/project/venv/bin/python ./updateDataAndReload.py
+        - require:
+            - reviewer-suggestions-configure
 
 reviewer-suggestions-repository:
     builder.git_latest:
