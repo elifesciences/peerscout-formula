@@ -94,6 +94,16 @@ reviewer-suggestions-repository:
         - force_checkout: True
         - force_reset: True
 
+    file.directory:
+        - name: {{ pillar.reviewer_suggestions.installation_path }}
+        - user: {{ pillar.elife.deploy_user.username }}
+        - group: {{ pillar.elife.deploy_user.username }}
+        - recurse:
+            - user
+            - group
+        - require:
+            - builder: reviewer-suggestions-repository
+
 reviewer-suggestions-aws-credentials:
     file.managed:
         - name: /home/{{ pillar.elife.deploy_user.username }}/.aws/credentials
