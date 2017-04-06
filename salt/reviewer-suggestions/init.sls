@@ -25,13 +25,25 @@ reviewer-suggestions-build-essential:
         - pkgs:
             - build-essential
 
+reviewer-suggestions-server-service-stopped:
+    service.dead:
+        - onlyif: ls /etc/init/reviewer-suggestions-server.conf
+        - name: reviewer-suggestions-server
+
+reviewer-suggestions-server-service-started:
+    service.running:
+        - order: last
+        - name: reviewer-suggestions-server
+        - require:
+            - file: reviewer-suggestions-server-service
+
 reviewer-suggestions-server-service:
     file.managed:
         - name: /etc/init/reviewer-suggestions-server.conf
         - source: salt://reviewer-suggestions/config/etc-init-reviewer-suggestions-server.conf
         - template: jinja
         - require:
-            - reviewer-suggestions-preprocess
+            - reviewer-suggestions-migrate-schema
             - reviewer-suggestions-client-bundle
             - reviewer-suggestions-cron
 
@@ -73,15 +85,39 @@ reviewer-suggestions-configure:
             - reviewer-suggestions-build-essential
             - python-dev
             - reviewer-suggestions-repository
+            - reviewer-suggestions-app-cfg
 
-reviewer-suggestions-preprocess:
+reviewer-suggestions-app-cfg:
+    file.managed:
+        - user: {{ pillar.elife.deploy_user.username }}
+        - name: /srv/reviewer-suggestions/app.cfg
+        - source: 
+            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-{{ salt['elife.cfg']('project.branch') }}.cfg
+            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-app.cfg
+        - template: jinja
+        - replace: True
+        - require:
+            - reviewer-suggestions-repository
+
+reviewer-suggestions-migrate-schema:
     cmd.run:
         - user: {{ pillar.elife.deploy_user.username }}
         - cwd: {{ pillar.reviewer_suggestions.installation_path }}/preprocessing
         - name: |
-            {{ pillar.reviewer_suggestions.installation_path }}/venv/bin/python ./updateDataAndReload.py
+            {{ pillar.reviewer_suggestions.installation_path }}/venv/bin/python ./migrateSchema.py
         - require:
             - reviewer-suggestions-configure
+            - reviewer-suggestions-server-service-stopped
+
+reviewer-suggestions-migrate-schema-and-start:
+    cmd.run:
+        - user: {{ pillar.elife.deploy_user.username }}
+        - cwd: {{ pillar.reviewer_suggestions.installation_path }}/preprocessing
+        - name: |
+            echo 'migrating schema and starting service'
+        - require:
+            - reviewer-suggestions-migrate-schema
+            - reviewer-suggestions-server-service-started
 
 reviewer-suggestions-repository:
     builder.git_latest:
@@ -89,7 +125,7 @@ reviewer-suggestions-repository:
         - identity: {{ pillar.elife.projects_builder.key or '' }}
         - rev: {{ salt['elife.rev']() }}
         - branch: {{ salt['elife.branch']() }}
-        - target: {{ pillar.reviewer_suggestions.installation_path }}
+        - target: {{ pillar.reviewer_suggestions.installation_path }}-dummy
         - force_fetch: True
         - force_checkout: True
         - force_reset: True
