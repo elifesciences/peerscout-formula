@@ -92,7 +92,6 @@ reviewer-suggestions-app-cfg:
         - user: {{ pillar.elife.deploy_user.username }}
         - name: /srv/reviewer-suggestions/app.cfg
         - source: 
-            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-{{ salt['elife.cfg']('project.branch') }}.cfg
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-app.cfg
         - template: jinja
         - replace: True
