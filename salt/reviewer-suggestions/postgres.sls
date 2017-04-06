@@ -29,7 +29,7 @@ postgres-db-exists:
         - name: {{ pillar.reviewer_suggestions.db.name }}
         {% endif %}
         - owner: {{ pillar.reviewer_suggestions.db.username }}
-        - db_user: {{ pillar.reviewer_suggestions.db.username }}
-        - db_password: {{ pillar.reviewer_suggestions.db.password }}
+        - db_user: {{ pillar.db_root.db.username }}
+        - db_password: {{ pillar.db_root.db.password }}
         - require:
             - postgres_user: postgres-db-user
