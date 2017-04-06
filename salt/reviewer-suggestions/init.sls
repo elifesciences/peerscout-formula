@@ -125,7 +125,7 @@ reviewer-suggestions-repository:
         - identity: {{ pillar.elife.projects_builder.key or '' }}
         - rev: {{ salt['elife.rev']() }}
         - branch: {{ salt['elife.branch']() }}
-        - target: {{ pillar.reviewer_suggestions.installation_path }}-dummy
+        - target: {{ pillar.reviewer_suggestions.installation_path }}
         - force_fetch: True
         - force_checkout: True
         - force_reset: True
