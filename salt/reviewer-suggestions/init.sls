@@ -109,16 +109,6 @@ reviewer-suggestions-migrate-schema:
             - reviewer-suggestions-configure
             - reviewer-suggestions-server-service-stopped
 
-reviewer-suggestions-migrate-schema-and-start:
-    cmd.run:
-        - user: {{ pillar.elife.deploy_user.username }}
-        - cwd: {{ pillar.reviewer_suggestions.installation_path }}/preprocessing
-        - name: |
-            echo 'migrating schema and starting service'
-        - require:
-            - reviewer-suggestions-migrate-schema
-            - reviewer-suggestions-server-service-started
-
 reviewer-suggestions-repository:
     builder.git_latest:
         - name: git@github.com:elifesciences/reviewer-suggestions.git
