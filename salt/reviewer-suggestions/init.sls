@@ -25,13 +25,18 @@ reviewer-suggestions-build-essential:
         - pkgs:
             - build-essential
 
+reviewer-suggestions-server-service-stopped:
+    service.dead:
+        - onlyif: ls /etc/init/reviewer-suggestions-server.conf
+        - name: reviewer-suggestions-server
+
 reviewer-suggestions-server-service:
     file.managed:
         - name: /etc/init/reviewer-suggestions-server.conf
         - source: salt://reviewer-suggestions/config/etc-init-reviewer-suggestions-server.conf
         - template: jinja
         - require:
-            - reviewer-suggestions-preprocess
+            - reviewer-suggestions-migrate-schema
             - reviewer-suggestions-client-bundle
             - reviewer-suggestions-cron
 
@@ -73,15 +78,29 @@ reviewer-suggestions-configure:
             - reviewer-suggestions-build-essential
             - python-dev
             - reviewer-suggestions-repository
+            - reviewer-suggestions-app-cfg
 
-reviewer-suggestions-preprocess:
+reviewer-suggestions-app-cfg:
+    file.managed:
+        - user: {{ pillar.elife.deploy_user.username }}
+        - name: /srv/reviewer-suggestions/app.cfg
+        - source: 
+            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-app.cfg
+        - template: jinja
+        - replace: True
+        - require:
+            - reviewer-suggestions-repository
+
+reviewer-suggestions-migrate-schema:
     cmd.run:
         - user: {{ pillar.elife.deploy_user.username }}
         - cwd: {{ pillar.reviewer_suggestions.installation_path }}/preprocessing
         - name: |
-            {{ pillar.reviewer_suggestions.installation_path }}/venv/bin/python ./updateDataAndReload.py
+            {{ pillar.reviewer_suggestions.installation_path }}/venv/bin/python ./migrateSchema.py
         - require:
+            - postgres-db-exists
             - reviewer-suggestions-configure
+            - reviewer-suggestions-server-service-stopped
 
 reviewer-suggestions-repository:
     builder.git_latest:
@@ -121,3 +140,10 @@ reviewer-suggestions-cron:
         - identifier: update-data
         - minute: 0
         - user: {{ pillar.elife.deploy_user.username }}
+
+reviewer-suggestions-server-service-started:
+    service.running:
+        - order: last
+        - name: reviewer-suggestions-server
+        - require:
+            - file: reviewer-suggestions-server-service

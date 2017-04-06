@@ -4,7 +4,9 @@ base:
         - elife.nginx
         - elife.nodejs6
         - elife.python3
+        - elife.postgresql
         - elife.aws-cli
         - elife.external-volume
         - elife.external-volume-srv
+        - reviewer-suggestions.postgres
         - reviewer-suggestions
