@@ -105,6 +105,7 @@ reviewer-suggestions-migrate-schema:
         - name: |
             {{ pillar.reviewer_suggestions.installation_path }}/venv/bin/python ./migrateSchema.py
         - require:
+            - postgres-db-exists
             - reviewer-suggestions-configure
             - reviewer-suggestions-server-service-stopped
 
