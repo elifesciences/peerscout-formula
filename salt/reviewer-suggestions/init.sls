@@ -30,13 +30,6 @@ reviewer-suggestions-server-service-stopped:
         - onlyif: ls /etc/init/reviewer-suggestions-server.conf
         - name: reviewer-suggestions-server
 
-reviewer-suggestions-server-service-started:
-    service.running:
-        - order: last
-        - name: reviewer-suggestions-server
-        - require:
-            - file: reviewer-suggestions-server-service
-
 reviewer-suggestions-server-service:
     file.managed:
         - name: /etc/init/reviewer-suggestions-server.conf
@@ -147,3 +140,10 @@ reviewer-suggestions-cron:
         - identifier: update-data
         - minute: 0
         - user: {{ pillar.elife.deploy_user.username }}
+
+reviewer-suggestions-server-service-started:
+    service.running:
+        - order: last
+        - name: reviewer-suggestions-server
+        - require:
+            - file: reviewer-suggestions-server-service
