@@ -141,9 +141,17 @@ reviewer-suggestions-cron:
         - minute: 0
         - user: {{ pillar.elife.deploy_user.username }}
 
-reviewer-suggestions-server-service-started:
+reviewer-suggestions-server-service-enabled:
     service.running:
-        - order: last
         - name: reviewer-suggestions-server
         - require:
             - file: reviewer-suggestions-server-service
+
+reviewer-suggestions-server-service-started:
+    cmd.run:
+        - order: last
+        - user: {{ pillar.elife.deploy_user.username }}
+        - name: |
+            timeout 60 sh -c 'while ! nc -q0 -w1 -z localhost 8080 </dev/null >/dev/null 2>&1; do sleep 1; done'
+        - require:
+            - reviewer-suggestions-server-service-enabled
