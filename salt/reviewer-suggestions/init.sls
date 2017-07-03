@@ -79,6 +79,7 @@ reviewer-suggestions-configure:
             - python-dev
             - reviewer-suggestions-repository
             - reviewer-suggestions-app-cfg
+            - reviewer-suggestions-newrelic-cfg
 
 reviewer-suggestions-app-cfg:
     file.managed:
@@ -88,6 +89,18 @@ reviewer-suggestions-app-cfg:
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-app.cfg
         - template: jinja
         - replace: True
+        - require:
+            - reviewer-suggestions-repository
+
+reviewer-suggestions-newrelic-cfg:
+    file.managed:
+        - user: {{ pillar.elife.deploy_user.username }}
+        - name: /srv/reviewer-suggestions/client/.inject-html/newrelic.html
+        - source: 
+            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-{{ pillar.elife.env }}.html
+            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-default.html
+        - replace: True
+        - makedirs: True
         - require:
             - reviewer-suggestions-repository
 
@@ -152,6 +165,6 @@ reviewer-suggestions-server-service-started:
         - order: last
         - user: {{ pillar.elife.deploy_user.username }}
         - name: |
-            timeout 60 sh -c 'while ! nc -q0 -w1 -z localhost 8080 </dev/null >/dev/null 2>&1; do sleep 1; done'
+            timeout 120 sh -c 'while ! nc -q0 -w1 -z localhost 8080 </dev/null >/dev/null 2>&1; do sleep 1; done'
         - require:
             - reviewer-suggestions-server-service-enabled
