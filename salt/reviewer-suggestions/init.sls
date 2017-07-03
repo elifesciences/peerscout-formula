@@ -79,6 +79,7 @@ reviewer-suggestions-configure:
             - python-dev
             - reviewer-suggestions-repository
             - reviewer-suggestions-app-cfg
+            - reviewer-suggestions-newrelic-cfg
 
 reviewer-suggestions-app-cfg:
     file.managed:
