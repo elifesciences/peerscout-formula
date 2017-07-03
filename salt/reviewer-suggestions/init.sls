@@ -99,7 +99,6 @@ reviewer-suggestions-newrelic-cfg:
         - source: 
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-{{ pillar.elife.env }}.html
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-default.html
-        - template: jinja
         - replace: True
         - makedirs: True
         - require:
