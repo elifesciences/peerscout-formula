@@ -165,6 +165,6 @@ reviewer-suggestions-server-service-started:
         - order: last
         - user: {{ pillar.elife.deploy_user.username }}
         - name: |
-            timeout 60 sh -c 'while ! nc -q0 -w1 -z localhost 8080 </dev/null >/dev/null 2>&1; do sleep 1; done'
+            timeout 120 sh -c 'while ! nc -q0 -w1 -z localhost 8080 </dev/null >/dev/null 2>&1; do sleep 1; done'
         - require:
             - reviewer-suggestions-server-service-enabled
