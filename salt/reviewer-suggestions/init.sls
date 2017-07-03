@@ -91,6 +91,19 @@ reviewer-suggestions-app-cfg:
         - require:
             - reviewer-suggestions-repository
 
+reviewer-suggestions-newrelic-cfg:
+    file.managed:
+        - user: {{ pillar.elife.deploy_user.username }}
+        - name: /srv/reviewer-suggestions/client/.inject-html/newrelic.html
+        - source: 
+            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-{{ pillar.elife.env }}.html
+            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-default.html
+        - template: jinja
+        - replace: True
+        - makedirs: True
+        - require:
+            - reviewer-suggestions-repository
+
 reviewer-suggestions-migrate-schema:
     cmd.run:
         - user: {{ pillar.elife.deploy_user.username }}
