@@ -80,6 +80,8 @@ reviewer-suggestions-configure:
             - reviewer-suggestions-repository
             - reviewer-suggestions-app-cfg
             - reviewer-suggestions-newrelic-cfg
+            - reviewer-suggestions-gtag-head-cfg
+            - reviewer-suggestions-gtag-body-cfg
 
 reviewer-suggestions-app-cfg:
     file.managed:
@@ -99,6 +101,30 @@ reviewer-suggestions-newrelic-cfg:
         - source: 
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-{{ pillar.elife.env }}.html
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-default.html
+        - replace: True
+        - makedirs: True
+        - require:
+            - reviewer-suggestions-repository
+
+reviewer-suggestions-gtag-head-cfg:
+    file.managed:
+        - user: {{ pillar.elife.deploy_user.username }}
+        - name: /srv/reviewer-suggestions/client/.inject-html/gtag.head.html
+        - source: 
+            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.head-{{ pillar.elife.env }}.html
+            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.head-default.html
+        - replace: True
+        - makedirs: True
+        - require:
+            - reviewer-suggestions-repository
+
+reviewer-suggestions-gtag-body-cfg:
+    file.managed:
+        - user: {{ pillar.elife.deploy_user.username }}
+        - name: /srv/reviewer-suggestions/client/.inject-html/gtag.body.html
+        - source: 
+            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.body-{{ pillar.elife.env }}.html
+            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.body-default.html
         - replace: True
         - makedirs: True
         - require:
