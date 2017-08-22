@@ -18,7 +18,7 @@ reviewer_suggestions:
     auth:
         auth0_domain: elife.auth0.com
         auth0_client_id: s0mwbpPUuDBuYAAFMxYUT6J9xF6pn67O
-        valid_domains: elifesciences.org
+        valid_email_domains: elifesciences.org
 
     storage:
         xml_dump_bucket: elife-ejp-ftp-db-xml-dump
