@@ -8,5 +8,5 @@ base:
         - elife.aws-cli
         - elife.external-volume
         - elife.external-volume-srv
-        - reviewer-suggestions.postgres
-        - reviewer-suggestions
+        - peerscout.postgres
+        - peerscout
