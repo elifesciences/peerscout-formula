@@ -1,7 +1,7 @@
 reviewer-suggestions-nginx-vhost:
     file.managed:
-        - name: /etc/nginx/sites-enabled/reviewer-suggestions.conf
-        - source: salt://peerscout/config/etc-nginx-sites-enabled-reviewer-suggestions.conf
+        - name: /etc/nginx/sites-enabled/peerscout.conf
+        - source: salt://peerscout/config/etc-nginx-sites-enabled-peerscout.conf
         - template: jinja
         - require:
             - nginx-config
