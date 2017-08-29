@@ -131,7 +131,7 @@ reviewer-suggestions-migrate-schema:
 
 reviewer-suggestions-repository:
     builder.git_latest:
-        - name: git@github.com:elifesciences/reviewer-suggestions.git
+        - name: git@github.com:elifesciences/peerscout.git
         - identity: {{ pillar.elife.projects_builder.key or '' }}
         - rev: {{ salt['elife.rev']() }}
         - branch: {{ salt['elife.branch']() }}
