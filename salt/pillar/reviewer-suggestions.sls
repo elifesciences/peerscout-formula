@@ -1,5 +1,5 @@
 reviewer_suggestions:
-    installation_path: /srv/reviewer-suggestions
+    installation_path: /srv/peerscout
 
     aws:
         access_key_id: null

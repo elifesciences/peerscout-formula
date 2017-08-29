@@ -74,7 +74,7 @@ reviewer-suggestions-configure:
 reviewer-suggestions-app-cfg:
     file.managed:
         - user: {{ pillar.elife.deploy_user.username }}
-        - name: /srv/reviewer-suggestions/app.cfg
+        - name: {{ pillar.reviewer_suggestions.installation_path }}/app.cfg
         - source: 
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-app.cfg
         - template: jinja
@@ -85,7 +85,7 @@ reviewer-suggestions-app-cfg:
 reviewer-suggestions-newrelic-cfg:
     file.managed:
         - user: {{ pillar.elife.deploy_user.username }}
-        - name: /srv/reviewer-suggestions/client/.inject-html/newrelic.html
+        - name: {{ pillar.reviewer_suggestions.installation_path }}/client/.inject-html/newrelic.html
         - source: 
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-{{ pillar.elife.env }}.html
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-default.html
@@ -97,7 +97,7 @@ reviewer-suggestions-newrelic-cfg:
 reviewer-suggestions-gtag-head-cfg:
     file.managed:
         - user: {{ pillar.elife.deploy_user.username }}
-        - name: /srv/reviewer-suggestions/client/.inject-html/gtag.head.html
+        - name: {{ pillar.reviewer_suggestions.installation_path }}/client/.inject-html/gtag.head.html
         - source: 
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.head-{{ pillar.elife.env }}.html
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.head-default.html
@@ -109,7 +109,7 @@ reviewer-suggestions-gtag-head-cfg:
 reviewer-suggestions-gtag-body-cfg:
     file.managed:
         - user: {{ pillar.elife.deploy_user.username }}
-        - name: /srv/reviewer-suggestions/client/.inject-html/gtag.body.html
+        - name: {{ pillar.reviewer_suggestions.installation_path }}/client/.inject-html/gtag.body.html
         - source: 
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.body-{{ pillar.elife.env }}.html
             - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.body-default.html
