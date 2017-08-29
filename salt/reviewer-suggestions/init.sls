@@ -8,18 +8,6 @@ reviewer-suggestions-nginx-vhost:
         - listen_in:
             - service: nginx-server-service
 
-{% for title, user in pillar.reviewer_suggestions.web_users.items() %}
-reviewer-suggestions-nginx-authentication-{{ title }}:
-    webutil.user_exists:
-        - name: {{ user.username }}
-        - password: {{ user.password }}
-        - htpasswd_file: /etc/nginx/reviewer-suggestions.htpasswd
-        - require:
-            - reviewer-suggestions-nginx-vhost
-        - listen_in:
-            - service: nginx-server-service
-{% endfor %}
-
 reviewer-suggestions-build-essential:
     pkg.installed:
         - pkgs:
