@@ -76,7 +76,7 @@ reviewer-suggestions-app-cfg:
         - user: {{ pillar.elife.deploy_user.username }}
         - name: {{ pillar.reviewer_suggestions.installation_path }}/app.cfg
         - source: 
-            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-app.cfg
+            - salt://reviewer-suggestions/config/srv-peerscout-app.cfg
         - template: jinja
         - replace: True
         - require:
