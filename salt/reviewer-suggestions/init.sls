@@ -15,13 +15,13 @@ reviewer-suggestions-build-essential:
 
 reviewer-suggestions-server-service-stopped:
     service.dead:
-        - onlyif: ls /etc/init/reviewer-suggestions-server.conf
+        - onlyif: ls /etc/init/peerscout-server.conf
         - name: reviewer-suggestions-server
 
 reviewer-suggestions-server-service:
     file.managed:
-        - name: /etc/init/reviewer-suggestions-server.conf
-        - source: salt://reviewer-suggestions/config/etc-init-reviewer-suggestions-server.conf
+        - name: /etc/init/peerscout-server.conf
+        - source: salt://reviewer-suggestions/config/etc-init-peerscout-server.conf
         - template: jinja
         - require:
             - reviewer-suggestions-migrate-schema
