@@ -87,8 +87,8 @@ reviewer-suggestions-newrelic-cfg:
         - user: {{ pillar.elife.deploy_user.username }}
         - name: {{ pillar.reviewer_suggestions.installation_path }}/client/.inject-html/newrelic.html
         - source: 
-            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-{{ pillar.elife.env }}.html
-            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-newrelic-default.html
+            - salt://reviewer-suggestions/config/srv-peerscout-client-inject-html-newrelic-{{ pillar.elife.env }}.html
+            - salt://reviewer-suggestions/config/srv-peerscout-client-inject-html-newrelic-default.html
         - replace: True
         - makedirs: True
         - require:
@@ -99,8 +99,8 @@ reviewer-suggestions-gtag-head-cfg:
         - user: {{ pillar.elife.deploy_user.username }}
         - name: {{ pillar.reviewer_suggestions.installation_path }}/client/.inject-html/gtag.head.html
         - source: 
-            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.head-{{ pillar.elife.env }}.html
-            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.head-default.html
+            - salt://reviewer-suggestions/config/srv-peerscout-client-inject-html-gtag.head-{{ pillar.elife.env }}.html
+            - salt://reviewer-suggestions/config/srv-peerscout-client-inject-html-gtag.head-default.html
         - replace: True
         - makedirs: True
         - require:
@@ -111,8 +111,8 @@ reviewer-suggestions-gtag-body-cfg:
         - user: {{ pillar.elife.deploy_user.username }}
         - name: {{ pillar.reviewer_suggestions.installation_path }}/client/.inject-html/gtag.body.html
         - source: 
-            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.body-{{ pillar.elife.env }}.html
-            - salt://reviewer-suggestions/config/srv-reviewer-suggestions-client-inject-html-gtag.body-default.html
+            - salt://reviewer-suggestions/config/srv-peerscout-client-inject-html-gtag.body-{{ pillar.elife.env }}.html
+            - salt://reviewer-suggestions/config/srv-peerscout-client-inject-html-gtag.body-default.html
         - replace: True
         - makedirs: True
         - require:
