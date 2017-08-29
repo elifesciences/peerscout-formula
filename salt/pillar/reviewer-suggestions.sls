@@ -1,6 +1,4 @@
 reviewer_suggestions:
-    web_users: {}
-
     installation_path: /srv/reviewer-suggestions
 
     aws:
