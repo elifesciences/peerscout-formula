@@ -1,4 +1,4 @@
-reviewer_suggestions:
+peerscout:
     installation_path: /srv/peerscout
 
     aws:
@@ -7,7 +7,7 @@ reviewer_suggestions:
         region: us-east-1
 
     db:
-        name: reviewer_suggestions
+        name: peerscout
         username: foouser # case sensitive. use all lowercase
         password: barpass
         host: 127.0.0.1

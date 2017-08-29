@@ -35,13 +35,13 @@ peerscout-server-service:
 
 peerscout-client-file-permissions:
   file.directory:
-    - name: {{ pillar.reviewer_suggestions.installation_path }}/client
+    - name: {{ pillar.peerscout.installation_path }}/client
     - mode: 777
 
 peerscout-client-install:
     cmd.run:
         - user: {{ pillar.elife.deploy_user.username }}
-        - cwd: {{ pillar.reviewer_suggestions.installation_path }}/client
+        - cwd: {{ pillar.peerscout.installation_path }}/client
         - name: |
             npm install
         - require:
@@ -50,7 +50,7 @@ peerscout-client-install:
 peerscout-client-bundle:
     cmd.run:
         - user: {{ pillar.elife.deploy_user.username }}
-        - cwd: {{ pillar.reviewer_suggestions.installation_path }}/client
+        - cwd: {{ pillar.peerscout.installation_path }}/client
         - name: |
             npm run bundle
         - require:
@@ -59,7 +59,7 @@ peerscout-client-bundle:
 peerscout-configure:
     cmd.run:
         - user: {{ pillar.elife.deploy_user.username }}
-        - cwd: {{ pillar.reviewer_suggestions.installation_path }}
+        - cwd: {{ pillar.peerscout.installation_path }}
         - name: |
             ./install.sh
         - require:
@@ -74,7 +74,7 @@ peerscout-configure:
 peerscout-app-cfg:
     file.managed:
         - user: {{ pillar.elife.deploy_user.username }}
-        - name: {{ pillar.reviewer_suggestions.installation_path }}/app.cfg
+        - name: {{ pillar.peerscout.installation_path }}/app.cfg
         - source: 
             - salt://peerscout/config/srv-peerscout-app.cfg
         - template: jinja
@@ -85,7 +85,7 @@ peerscout-app-cfg:
 peerscout-newrelic-cfg:
     file.managed:
         - user: {{ pillar.elife.deploy_user.username }}
-        - name: {{ pillar.reviewer_suggestions.installation_path }}/client/.inject-html/newrelic.html
+        - name: {{ pillar.peerscout.installation_path }}/client/.inject-html/newrelic.html
         - source: 
             - salt://peerscout/config/srv-peerscout-client-inject-html-newrelic-{{ pillar.elife.env }}.html
             - salt://peerscout/config/srv-peerscout-client-inject-html-newrelic-default.html
@@ -97,7 +97,7 @@ peerscout-newrelic-cfg:
 peerscout-gtag-head-cfg:
     file.managed:
         - user: {{ pillar.elife.deploy_user.username }}
-        - name: {{ pillar.reviewer_suggestions.installation_path }}/client/.inject-html/gtag.head.html
+        - name: {{ pillar.peerscout.installation_path }}/client/.inject-html/gtag.head.html
         - source: 
             - salt://peerscout/config/srv-peerscout-client-inject-html-gtag.head-{{ pillar.elife.env }}.html
             - salt://peerscout/config/srv-peerscout-client-inject-html-gtag.head-default.html
@@ -109,7 +109,7 @@ peerscout-gtag-head-cfg:
 peerscout-gtag-body-cfg:
     file.managed:
         - user: {{ pillar.elife.deploy_user.username }}
-        - name: {{ pillar.reviewer_suggestions.installation_path }}/client/.inject-html/gtag.body.html
+        - name: {{ pillar.peerscout.installation_path }}/client/.inject-html/gtag.body.html
         - source: 
             - salt://peerscout/config/srv-peerscout-client-inject-html-gtag.body-{{ pillar.elife.env }}.html
             - salt://peerscout/config/srv-peerscout-client-inject-html-gtag.body-default.html
@@ -121,9 +121,9 @@ peerscout-gtag-body-cfg:
 peerscout-migrate-schema:
     cmd.run:
         - user: {{ pillar.elife.deploy_user.username }}
-        - cwd: {{ pillar.reviewer_suggestions.installation_path }}/preprocessing
+        - cwd: {{ pillar.peerscout.installation_path }}/preprocessing
         - name: |
-            {{ pillar.reviewer_suggestions.installation_path }}/venv/bin/python ./migrateSchema.py
+            {{ pillar.peerscout.installation_path }}/venv/bin/python ./migrateSchema.py
         - require:
             - postgres-db-exists
             - peerscout-configure
@@ -135,13 +135,13 @@ peerscout-repository:
         - identity: {{ pillar.elife.projects_builder.key or '' }}
         - rev: {{ salt['elife.rev']() }}
         - branch: {{ salt['elife.branch']() }}
-        - target: {{ pillar.reviewer_suggestions.installation_path }}
+        - target: {{ pillar.peerscout.installation_path }}
         - force_fetch: True
         - force_checkout: True
         - force_reset: True
 
     file.directory:
-        - name: {{ pillar.reviewer_suggestions.installation_path }}
+        - name: {{ pillar.peerscout.installation_path }}
         - user: {{ pillar.elife.deploy_user.username }}
         - group: {{ pillar.elife.deploy_user.username }}
         - recurse:
@@ -163,7 +163,7 @@ peerscout-aws-credentials:
 
 peerscout-cron:
     cron.present:
-        - name: {{ pillar.reviewer_suggestions.installation_path }}/update-data-and-reload.sh
+        - name: {{ pillar.peerscout.installation_path }}/update-data-and-reload.sh
         - identifier: update-data
         - minute: 0
         - user: {{ pillar.elife.deploy_user.username }}
