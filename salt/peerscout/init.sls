@@ -18,20 +18,27 @@ peerscout-server-service-stopped:
         - onlyif: ls /etc/init/peerscout-server.conf
         - name: peerscout-server
 
-peerscout-server-service:
+peerscout-server-upstart-script:
     file.managed:
         - name: /etc/init/peerscout-server.conf
         - source: salt://peerscout/config/etc-init-peerscout-server.conf
         - template: jinja
+
+peerscout-server-systemd-script:
+    file.managed:
+        - name: /lib/systemd/system/peerscout-server.service
+        - source: salt://peerscout/config/lib-systemd-system-peerscout-server.service
+        - template: jinja
+
+peerscout-server-service:
+    service.running:
+        - name: peerscout-server
         - require:
             - peerscout-migrate-schema
             - peerscout-client-bundle
             - peerscout-cron
-
-    service.running:
-        - name: peerscout-server
-        - require:
-            - file: peerscout-server-service
+            - peerscout-server-upstart-script
+            - peerscout-server-systemd-script
 
 peerscout-client-file-permissions:
   file.directory:
@@ -168,12 +175,6 @@ peerscout-cron:
         - minute: 0
         - user: {{ pillar.elife.deploy_user.username }}
 
-peerscout-server-service-enabled:
-    service.running:
-        - name: peerscout-server
-        - require:
-            - file: peerscout-server-service
-
 peerscout-server-service-started:
     cmd.run:
         - order: last
@@ -181,4 +182,4 @@ peerscout-server-service-started:
         - name: |
             timeout 120 sh -c 'while ! nc -q0 -w1 -z localhost 8080 </dev/null >/dev/null 2>&1; do sleep 1; done'
         - require:
-            - peerscout-server-service-enabled
+            - peerscout-server-service
