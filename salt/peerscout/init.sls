@@ -13,11 +13,6 @@ peerscout-build-essential:
         - pkgs:
             - build-essential
 
-peerscout-server-service-stopped:
-    service.dead:
-        - onlyif: ls /etc/init/peerscout-server.conf
-        - name: peerscout-server
-
 peerscout-server-upstart-script:
     file.managed:
         - name: /etc/init/peerscout-server.conf
@@ -134,7 +129,6 @@ peerscout-migrate-schema:
         - require:
             - postgres-db-exists
             - peerscout-configure
-            - peerscout-server-service-stopped
 
 peerscout-repository:
     builder.git_latest:
