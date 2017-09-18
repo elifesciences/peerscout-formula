@@ -8,5 +8,6 @@ base:
         - elife.aws-cli
         - elife.external-volume
         - elife.external-volume-srv
+        # - elife.newrelic-python
         - peerscout.postgres
         - peerscout
