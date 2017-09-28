@@ -2,4 +2,4 @@ base:
     '*':
         - elife
         - peerscout
-        #- peerscout-secrets
+        - peerscout-secrets
