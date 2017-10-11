@@ -31,7 +31,6 @@ peerscout-server-service:
         - require:
             - peerscout-migrate-schema
             - peerscout-client-bundle
-            - peerscout-cron
             - peerscout-server-upstart-script
             - peerscout-server-systemd-script
 
@@ -161,13 +160,6 @@ peerscout-aws-credentials:
         - template: jinja
         - require:
             - deploy-user
-
-peerscout-cron:
-    cron.present:
-        - name: {{ pillar.peerscout.installation_path }}/update-data-and-reload.sh
-        - identifier: update-data
-        - minute: 0
-        - user: {{ pillar.elife.deploy_user.username }}
 
 peerscout-server-service-started:
     cmd.run:
