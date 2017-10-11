@@ -119,6 +119,22 @@ peerscout-gtag-body-cfg:
         - require:
             - peerscout-repository
 
+{% if pillar.env in ['dev', 'ci'] %}
+peerscout-db-clean:
+    cmd.run
+        # local psql, no RDS support
+        - name: |
+            psql --no-password {{ pillar.peerscout.db.name}} {{ pillar.peerscout.db.username }} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'
+        - env:
+            - PGPASSWORD: {{ pillar.peerscout.db.password }}
+        - require:
+            - postgres-db-exists
+            - peerscout-configure
+        - require_in:
+            - peerscout-migrate-schema
+{% endif %}
+
+
 peerscout-migrate-schema:
     cmd.run:
         - user: {{ pillar.elife.deploy_user.username }}
