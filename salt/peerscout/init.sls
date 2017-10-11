@@ -124,7 +124,7 @@ peerscout-db-clean:
     cmd.run:
         # local psql, no RDS support
         - name: |
-            psql --no-password {{ pillar.peerscout.db.name}} {{ pillar.elife.db_root.username }} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'
+            timeout 120 psql --no-password {{ pillar.peerscout.db.name}} {{ pillar.elife.db_root.username }} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'
         - env:
             - PGPASSWORD: {{ pillar.elife.db_root.password }}
         - require:
