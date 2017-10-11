@@ -131,7 +131,7 @@ peerscout-db-clean:
             - postgres-db-exists
             - peerscout-configure
         - require_in:
-            - peerscout-migrate-schema
+            - cmd: peerscout-migrate-schema
 {% endif %}
 
 
