@@ -121,7 +121,7 @@ peerscout-gtag-body-cfg:
 
 {% if pillar.elife.env in ['dev', 'ci'] %}
 peerscout-db-clean:
-    cmd.run
+    cmd.run:
         # local psql, no RDS support
         - name: |
             psql --no-password {{ pillar.peerscout.db.name}} {{ pillar.peerscout.db.username }} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'
