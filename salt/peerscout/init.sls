@@ -119,7 +119,7 @@ peerscout-gtag-body-cfg:
         - require:
             - peerscout-repository
 
-{% if pillar.env in ['dev', 'ci'] %}
+{% if pillar.elife.env in ['dev', 'ci'] %}
 peerscout-db-clean:
     cmd.run
         # local psql, no RDS support
