@@ -124,7 +124,7 @@ peerscout-migrate-schema:
         - user: {{ pillar.elife.deploy_user.username }}
         - cwd: {{ pillar.peerscout.installation_path }}/preprocessing
         - name: |
-            {{ pillar.peerscout.installation_path }}/venv/bin/python ./migrateSchema.py
+            timeout 120 {{ pillar.peerscout.installation_path }}/venv/bin/python ./migrateSchema.py
         - require:
             - postgres-db-exists
             - peerscout-configure
