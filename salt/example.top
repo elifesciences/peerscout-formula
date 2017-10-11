@@ -11,3 +11,4 @@ base:
         # - elife.newrelic-python
         - peerscout.postgres
         - peerscout
+        - peerscout.cron
