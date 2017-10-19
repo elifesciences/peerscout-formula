@@ -182,6 +182,6 @@ peerscout-server-service-started:
         - order: last
         - user: {{ pillar.elife.deploy_user.username }}
         - name: |
-            timeout 120 sh -c 'while ! nc -q0 -w1 -z localhost 8080 </dev/null >/dev/null 2>&1; do sleep 1; done'
+            wait_for_port 8080 120
         - require:
             - peerscout-server-service
