@@ -26,3 +26,12 @@ peerscout:
 
         editors_bucket: elife-ejp-ftp
         editors_prefix: ejp_query_tool_query_id_455_DataScience:_Editors
+
+elife:
+    newrelic:
+        enabled: False
+
+    newrelic_python:
+        application_folder: /srv/peerscout
+        service:
+        dependency_state: peerscout-server-service
