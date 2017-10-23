@@ -33,5 +33,5 @@ elife:
 
     newrelic_python:
         application_folder: /srv/peerscout
-        service:
-        dependency_state: peerscout-server-service
+        service: peerscout-server-service
+        dependency_state: peerscout-migrate-schema
