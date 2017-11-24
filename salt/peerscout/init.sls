@@ -124,11 +124,11 @@ peerscout-db-clean:
     cmd.run:
         # local psql, no RDS support
         - name: |
-            timeout 30 psql --no-password {{ pillar.peerscout.db.name}} {{ pillar.peerscout.db.username }} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'
+            timeout 30 psql --no-password {{ pillar.elife.db.app.name}} {{ pillar.elife.db.app.username }} -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'
         - env:
-            - PGPASSWORD: {{ pillar.peerscout.db.password }}
+            - PGPASSWORD: {{ pillar.elife.db.app.password }}
         - require:
-            - postgres-db-exists
+            #- postgres-db-exists
             - peerscout-configure
         - require_in:
             - cmd: peerscout-migrate-schema
@@ -142,7 +142,7 @@ peerscout-migrate-schema:
         - name: |
             timeout 120 {{ pillar.peerscout.installation_path }}/venv/bin/python ./migrateSchema.py
         - require:
-            - postgres-db-exists
+            #- postgres-db-exists
             - peerscout-configure
 
 peerscout-repository:

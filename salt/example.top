@@ -5,10 +5,10 @@ base:
         - elife.nodejs6
         - elife.python3
         - elife.postgresql
+        - elife.postgresql-appdb
         - elife.aws-cli
         - elife.external-volume
         - elife.external-volume-srv
         # - elife.newrelic-python
-        - peerscout.postgres
         - peerscout
         - peerscout.cron

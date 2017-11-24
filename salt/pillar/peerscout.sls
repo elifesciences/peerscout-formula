@@ -6,13 +6,6 @@ peerscout:
         secret_access_key: null
         region: us-east-1
 
-    db:
-        name: peerscout
-        username: foouser # case sensitive. use all lowercase
-        password: barpass
-        host: 127.0.0.1
-        port: 5432
-
     auth:
         auth0_domain: elife.auth0.com
         auth0_client_id: s0mwbpPUuDBuYAAFMxYUT6J9xF6pn67O
@@ -28,6 +21,10 @@ peerscout:
         editors_prefix: ejp_query_tool_query_id_455_DataScience:_Editors
 
 elife:
+    db:
+        app:
+            name: peerscout
+
     newrelic:
         enabled: False
 
