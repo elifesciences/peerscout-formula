@@ -27,6 +27,8 @@ peerscout-server-systemd-script:
 
 peerscout-server-service:
     service.running:
+        - enable: True
+        - reload: True
         - name: peerscout-server
         - require:
             - peerscout-migrate-schema
