@@ -27,6 +27,9 @@ peerscout:
         editors_bucket: elife-ejp-ftp
         editors_prefix: ejp_query_tool_query_id_455_DataScience:_Editors
 
+        editor_roles_and_keywords_bucket: elife-ejp-ftp
+        editor_roles_and_keywords_prefix: ejp_query_tool_query_id_489_DataScience:_Editor_Keywords
+
 elife:
     newrelic:
         enabled: False
