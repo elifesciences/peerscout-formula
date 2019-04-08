@@ -28,7 +28,9 @@ peerscout-server-systemd-script:
 peerscout-server-service:
     service.running:
         - enable: True
-        - reload: True
+        {% if salt['grains.get']('osrelease') == '14.04' %}
+        - reload: True # cannot reload on systemd
+        {% endif %}
         - name: peerscout-server
         - require:
             - peerscout-migrate-schema
