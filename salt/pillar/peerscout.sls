@@ -22,10 +22,10 @@ peerscout:
         xml_dump_bucket: elife-ejp-ftp-db-xml-dump
 
         ecr_bucket: elife-ejp-ftp
-        ecr_prefix: ejp_query_tool_query_id_380_DataScience:_Early_Career_Researchers
+        ecr_prefix: ejp_query_tool_query_id_DataScience:_Early_Career_Researchers
 
         editors_bucket: elife-ejp-ftp
-        editors_prefix: ejp_query_tool_query_id_455_DataScience:_Editors
+        editors_prefix: ejp_query_tool_query_id_DataScience:_Editors
 
         editor_roles_and_keywords_bucket: elife-ejp-ftp
         editor_roles_and_keywords_prefix: ejp_query_tool_query_id_489_DataScience:_Editor_Keywords
